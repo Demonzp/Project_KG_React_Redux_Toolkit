@@ -21,6 +21,8 @@ const sliceAuth = createSlice({
     setGuest(state) {
       state.user = null;
       state.token = null;
+      state.authAttempted = true;
+      state.isLoading = false;
     }
   },
   extraReducers: (builder) => {

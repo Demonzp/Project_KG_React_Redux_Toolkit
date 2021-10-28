@@ -94,7 +94,7 @@ export const signUpAction = (data) => async (dispatch) => {
 
 export const signOutAction = async (dispatch) => {
   try {
-    await dispatch(setGuest);
+    dispatch(setGuest());
     localStorage.removeItem('token');
   } catch (error) {
     dispatch(addMessageAction({ type: MessageTypes.ERROR, text: error.message }));
