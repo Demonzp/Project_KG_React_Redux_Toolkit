@@ -7,12 +7,15 @@ import GuestRoute from './routeMiddlewares/guest';
 import AuthRoute from './routeMiddlewares/auth';
 import { Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import useAuth from './hooks/useAuth';
+import AppAlerts from './components/AppAlerts';
 
 function App() {
   return (
     <div className="App">
       <NavBar />
       <Container>
+        <AppAlerts />
         <Switch>
           {routes.map((route, key) => {
             switch (route.middelware) {

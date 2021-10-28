@@ -1,13 +1,14 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
-import RouteNames from "../../constants/routeNames";
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import RouteNames from '../../constants/routeNames';
+import useAuth from '../../hooks/useAuth';
 
 import cssStyles from './navbar.module.css';
 
 const NavBar = () => {
-  const authAttempted = true;
-  const user = null;
+  const { authAttempted, user, signout } = useAuth();
 
+  useAuth();
   return (
     <nav className={cssStyles.nav}>
       <h3>Project_KG</h3>
@@ -22,7 +23,7 @@ const NavBar = () => {
                 {/* <Link className={cssStyles.navRefs} to={RouteNames.employees}>
                   <li>Employees</li>
                 </Link> */}
-                <Link className={cssStyles.navRefs} to={RouteNames.HOME}>
+                <Link className={cssStyles.navRefs} to={RouteNames.HOME} onClick={signout}>
                   <li>SignOut</li>
                 </Link>
               </Fragment> :

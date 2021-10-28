@@ -1,11 +1,10 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import RouteNames from '../constants/routeNames';
+import useAuth from '../hooks/useAuth';
 
 const AuthRoute = ({component:Component, ...rest})=> {
-
-  const authAttempted = true;
-  const user = null;
+  const { authAttempted, user } = useAuth();
 
   return (
     <Route
@@ -25,7 +24,7 @@ const AuthRoute = ({component:Component, ...rest})=> {
         />
       )
       :
-      <di>Loading...</di>
+      <div>Loading...</div>
       )}
     />
   );

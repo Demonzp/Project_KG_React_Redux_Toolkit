@@ -1,11 +1,10 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import RouteNames from '../constants/routeNames';
+import useAuth from '../hooks/useAuth';
 
 const GuestRoute = ({component:Component, ...rest})=> {
-
-  const authAttempted = true;
-  const user = null;
+  const { authAttempted, user } = useAuth();
 
   return (
     <Route
@@ -19,13 +18,13 @@ const GuestRoute = ({component:Component, ...rest})=> {
         :
         <Redirect
           to={{
-            pathname: RouteNames.SIGNIN,
+            pathname: RouteNames.HOME,
             state: { from: location }
           }}
         />
       )
       :
-      <di>Loading...</di>
+      <div>Loading...</div>
       )}
     />
   );
