@@ -14,10 +14,12 @@ export const apiEmployees = createApi({
     },
   }),
   endpoints: (builder) => ({
+
     getEmployee: builder.query({
       query: (_id) => `/employees/${_id}`,
       providesTags: ['Employee'],
     }),
+
     getEmployees: builder.query({
       transformResponse: (response) => {
         let forcePage = response.page;
@@ -48,6 +50,7 @@ export const apiEmployees = createApi({
         } catch { }
       },
     }),
+
     addEmployee: builder.mutation({
       query: (data)=>({
         url: '/employees/',
@@ -56,6 +59,7 @@ export const apiEmployees = createApi({
       }),
       invalidatesTags: ['Employees'],
     }),
+    
     delEmployee: builder.mutation({
       query: (_id)=>({
         url: `/employees/${_id}`,

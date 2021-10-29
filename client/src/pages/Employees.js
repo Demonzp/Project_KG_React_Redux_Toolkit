@@ -7,12 +7,14 @@ import CustomModal from '../components/CustomModal';
 import FormEmployee from '../components/FormEmployee';
 import useModalForm from '../hooks/useModalForm';
 import EmployeeItem from '../components/EmployeeItem';
+import { useSelector } from 'react-redux';
 
 const Employees = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
+  const { isLoading } = useSelector(state => state.employees);
 
-  const { data: { employees, pages, forcePage } = { employees: [], pages: 1, forcePage: 1 }, isLoading } = useGetEmployeesQuery({ page, limit });
+  const { data: { employees, pages, forcePage } = { employees: [], pages: 1, forcePage: 1 } } = useGetEmployeesQuery({ page, limit });
 
   const [selectEditEmployee, setSelectEditEmployee] = useState(null);
 
@@ -66,7 +68,7 @@ const Employees = () => {
         </Col>
 
         <Col>
-          <SimplePaginator onPage={setPage} pages={pages} forcePage={forcePage}/>
+          <SimplePaginator onPage={setPage} pages={pages} forcePage={forcePage} />
         </Col>
 
       </Row>
@@ -87,9 +89,9 @@ const Employees = () => {
           {
             !isLoading ?
               employees.map((employee) => (
-                <EmployeeItem 
+                <EmployeeItem
                   key={employee._id}
-                  employee={employee} 
+                  employee={employee}
                   isLoadingEdit={isLoadingEdit}
                   openEditModal={openEditModal}
                 />
@@ -100,10 +102,10 @@ const Employees = () => {
         </tbody>
       </Table>
       {
-        isLoading?
-        <div>Loading...</div>
-        :
-        null
+        isLoading ?
+          <div>Loading...</div>
+          :
+          null
       }
     </Fragment>
   );
