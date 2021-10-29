@@ -1,37 +1,20 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Button, Col, Row, Table } from 'reactstrap';
 import { useAddEmployeeMutation, useEditEmployeeMutation, useGetEmployeesQuery } from '../services/employees';
 import SimplePaginator from '../components/SimplePaginator';
 import SimplePaginLimit from '../components/SimplePaginLimit';
 import CustomModal from '../components/CustomModal';
 import FormEmployee from '../components/FormEmployee';
+import useModalForm from '../hooks/useModalForm';
 
 const Employees = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
-  const [addEmployee, {isLoading: isLoadingAdd, isSuccess: isSuccessAdd, isError: isErrorAdd}] = useAddEmployeeMutation();
-  
-  useEffect(()=>{
-    if(isSuccessAdd){
-      setModalAdd(false);
-    }
-  },[isSuccessAdd]);
-
-  const [editEmployee, {isLoading: isLoadingEdit, isSuccess: isSuccessEdit, isError: isErrorEdit}] = useEditEmployeeMutation();
-  
-  useEffect(()=>{
-    if(isSuccessEdit){
-      setModalEdit(false);
-    }
-  },[isSuccessEdit]);
 
   const [selectEditEmployee, setSelectEditEmployee] = useState(null);
 
-  const [modalEdit, setModalEdit] = useState(false);
-  const [modalAdd, setModalAdd] = useState(false);
-
-  const toggleModalEdit = () => setModalEdit(!modalEdit);
-  const toggleModalAdd = () => setModalAdd(!modalAdd);
+  const { func: addEmployee, modal: modalAdd, toggleModal: toggleModalAdd, isLoading: isLoadingAdd } = useModalForm(useAddEmployeeMutation);
+  const { func: editEmployee, modal: modalEdit, toggleModal: toggleModalEdit, isLoading: isLoadingEdit } = useModalForm(useEditEmployeeMutation);
 
   const { data: { employees, pages } = { employees: [], pages: 1 }, isLoading } = useGetEmployeesQuery({ page, limit });
 
@@ -42,10 +25,10 @@ const Employees = () => {
   };
 
   const handleEditEmployee = (data) => {
-    editEmployee({data: {...data, _id:selectEditEmployee._id}, overData:{page, limit}});
+    editEmployee({ data: { ...data, _id: selectEditEmployee._id }, overData: { page, limit } });
   };
 
-  const handleAddEmployee = (data)=>{
+  const handleAddEmployee = (data) => {
     addEmployee(data);
   };
 
@@ -74,7 +57,7 @@ const Employees = () => {
         modalHandler={handleAddEmployee}
         isLoading={isLoadingAdd}
       >
-        <FormEmployee employee={{name:'', sex: '', birthday:null, salary: '', position: '', contacts: ''}} />
+        <FormEmployee employee={{ name: '', sex: '', birthday: null, salary: '', position: '', contacts: '' }} />
       </CustomModal>
       <Row>
         <Col xs="3">
