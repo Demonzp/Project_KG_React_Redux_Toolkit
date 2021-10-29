@@ -19,7 +19,13 @@ export const apiEmployees = createApi({
       providesTags: ['Employee'],
     }),
     getEmployees: builder.query({
-      transformResponse: (response) => { return { employees: response.docs, pages: response.pages } },
+      transformResponse: (response) => {
+        let forcePage = response.page;
+        if(forcePage>1 && response.docs.length<=0){
+          forcePage -= 1;
+        }
+        return { employees: response.docs, pages: response.pages, forcePage }
+      },
       query: ({ page = 1, limit = 10 }) => `/employees?limit=${limit}&page=${page}`,
       providesTags: ['Employees'],
     }),
