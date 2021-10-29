@@ -1,5 +1,6 @@
 import RouteMiddlewares from './constants/routeMiddlewares';
 import RouteNames from './constants/routeNames';
+import Employees from './pages/Employees';
 import Home from './pages/Home';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
@@ -26,5 +27,12 @@ export const routes = [
     component: Signup,
     layout: "",
     middelware:RouteMiddlewares.GUEST,
+  },
+  {
+    path: RouteNames.EMPLOYEES,
+    name: "Emploeey",
+    component: Employees,
+    layout: "",
+    middelware:RouteMiddlewares.AUTH,
   },
 ];

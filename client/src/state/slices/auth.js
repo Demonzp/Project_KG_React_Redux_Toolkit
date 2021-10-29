@@ -81,7 +81,6 @@ const sliceAuth = createSlice({
       .addMatcher(
         apiAuth.endpoints.attempt.matchRejected,
         (state, { payload }) => {
-          console.error('error = ', payload.error);
           state.authAttempted = true;
           state.isLoading = false;
         }

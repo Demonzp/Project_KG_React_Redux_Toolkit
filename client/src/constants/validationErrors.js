@@ -18,4 +18,9 @@ export default class ValidationsErrors{
     'required': 'Confirm Password is required',
     'equel': 'Confirm Password must by equel Password'
   };
+
+  static SALARY = {
+    'required': 'Salary is required',
+    'valueAsNumber': 'value must by a number',
+  }
 }
