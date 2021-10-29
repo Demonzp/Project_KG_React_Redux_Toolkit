@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Button, Col, Row, Table } from 'reactstrap';
-import { useAddEmployeeMutation, useEditEmployeeMutation, useGetEmployeesQuery } from '../services/employees';
+import { useAddEmployeeMutation, useEditEmployeeMutation, useDelEmployeeMutation, useGetEmployeesQuery } from '../services/employees';
 import SimplePaginator from '../components/SimplePaginator';
 import SimplePaginLimit from '../components/SimplePaginLimit';
 import CustomModal from '../components/CustomModal';
@@ -11,12 +11,14 @@ const Employees = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
 
+  const { data: { employees, pages } = { employees: [], pages: 1 }, isLoading } = useGetEmployeesQuery({ page, limit });
+
   const [selectEditEmployee, setSelectEditEmployee] = useState(null);
 
   const { func: addEmployee, modal: modalAdd, toggleModal: toggleModalAdd, isLoading: isLoadingAdd } = useModalForm(useAddEmployeeMutation);
   const { func: editEmployee, modal: modalEdit, toggleModal: toggleModalEdit, isLoading: isLoadingEdit } = useModalForm(useEditEmployeeMutation);
 
-  const { data: { employees, pages } = { employees: [], pages: 1 }, isLoading } = useGetEmployeesQuery({ page, limit });
+  const [delEmployee] = useDelEmployeeMutation();
 
   const openEditModal = (_id) => {
     const employee = employees.find(empl => empl._id === _id);
@@ -97,7 +99,7 @@ const Employees = () => {
                   <td>{employee.salary}</td>
                   <td>
                     <Button color='secondary' size='sm' className='mr-2' outline onClick={() => openEditModal(employee._id)}>EDIT</Button>{' '}
-                    <Button color='danger' size='sm' outline >DELETE</Button>
+                    <Button color='danger' size='sm' outline onClick={()=>delEmployee(employee._id)}>DELETE</Button>
                   </td>
                 </tr>
               ))

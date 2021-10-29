@@ -50,7 +50,14 @@ export const apiEmployees = createApi({
       }),
       invalidatesTags: ['Employees'],
     }),
+    delEmployee: builder.mutation({
+      query: (_id)=>({
+        url: `/employees/${_id}`,
+        method:'DELETE'
+      }),
+      invalidatesTags: ['Employees'],
+    }),
   }),
 });
 
-export const { useGetEmployeesQuery, useEditEmployeeMutation, useAddEmployeeMutation } = apiEmployees;
+export const { useGetEmployeesQuery, useEditEmployeeMutation, useAddEmployeeMutation, useDelEmployeeMutation } = apiEmployees;
